@@ -20,12 +20,7 @@ module VerificacaoErro(
                 // Compara o número atual com o esperado
                 if (numero != pista[23 - posicao_atual*4 -: 4]) begin
                     erro_ocorrido = 1;
-
-                    // Se já houver erro, vai para falha
-                    if (prox_estado == 3'b011 || erro_ocorrido)
-                        prox_estado = 3'b100;
-                    else
-                        prox_estado = 3'b011; // Sucesso parcial (1 erro)
+                    prox_estado = (estado_atual == 3'b011) ? 3'b100 : 3'b011; // Falha ou sucesso parcial
                 end else if (posicao_atual == 5) begin
                     prox_estado = 3'b010; // Sucesso total
                 end
